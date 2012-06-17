@@ -894,8 +894,7 @@ class wordzGui:
         #details treeview
         self.details_treestore = gtk.TreeStore(str)
         self.details_treeview = gtk.TreeView(self.details_treestore)
-        
-        
+
         self.details_cell = gtk.CellRendererText()
         self.details_tvcolumn = gtk.TreeViewColumn(_('Details'),self.details_cell,markup=0)
         self.details_treeview.append_column(self.details_tvcolumn)
@@ -934,59 +933,58 @@ class wordzGui:
         else:
             renderer.set_property('text', None)
 
-    
+
     def on_preview_button_clicked(self, widget=None, event=None):
-	self.get_word = self.preview_entry.get_text()
-	#self.clear_preview_word()
-	self.show_meaning()
-	
-    #def clear_preview_word(self, widget=None, event=None):
-	#label = gtk.Label()
-	#print 'test'
-	##label.set_text(' ')
-	#table = self.builder.get_object('table3')
-	#table.attach(label,0,1,0,1)
-	#txt = ' '
-	#label.set_markup('<span foreground="white"><b>%s</b></span>'%txt)
-	#label.show()
-	
+        self.get_word = self.preview_entry.get_text()
+        #self.clear_preview_word()
+        self.show_meaning()
+
+        #def clear_preview_word(self, widget=None, event=None):
+        #label = gtk.Label()
+        #print 'test'
+        ##label.set_text(' ')
+        #table = self.builder.get_object('table3')
+        #table.attach(label,0,1,0,1)
+        #txt = ' '
+        #label.set_markup('<span foreground="white"><b>%s</b></span>'%txt)
+        #label.show()
+
     def show_meaning(self,widget=None, event=None):
-	self.frame2.hide()
-	self.welcome.hide()
+        self.frame2.hide()
+        self.welcome.hide()
         #self.frame4.show()
         table = self.builder.get_object('table3')
         #preview_view_word = gtk.Label()
-        
+
         preview_view_word = self.builder.get_object('label13')
         #event = gtk.EventBox()
         #preview_view_word.set_has_tooltip(True)
         preview_view_word.set_text(self.get_word)
         #table.attach(preview_view_word,0,1,0,1)
         #preview_view_word.set_markup('<span foreground="white"><b>%s</b></span>'%self.get_word)
-	#event.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#AED6EF'))
+        #event.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#AED6EF'))
         preview_view_word.show()
         #preview_view_word.set_text(' ')
         #event.show()
-        
         scrolledwindow5 = self.builder.get_object('scrolledwindow5')
         preview_label = self.builder.get_object('preview_label')
-	preview_event = self.builder.get_object('eventbox3')
-	temp = wordnet.get_definition(self.get_word)
-	#scrolledwindow5.add(preview_event)
-	preview_event.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#AED6EF'))
-	preview_label.set_line_wrap(True)
-	preview_label.set_selectable(True)
-	preview_label.set_text(temp)
-	self.frame4.show()
-	
+        preview_event = self.builder.get_object('eventbox3')
+        temp = wordnet.get_definition(self.get_word)
+        #scrolledwindow5.add(preview_event)
+        preview_event.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('#AED6EF'))
+        preview_label.set_line_wrap(True)
+        preview_label.set_selectable(True)
+        preview_label.set_text(temp)
+        self.frame4.show()
+
     def on_flash_card_clicked(self, widget=None, event=None):
         self.window.hide()
         game = games.flash()
         #game.g.builder.get_object('window2').show()
         self.window.show()
-        
+
     def on_preview_add_clicked(self, widget, data=None):
-	word = self.preview_entry.get_text()
+        word = self.preview_entry.get_text()
         self.new_word = []
         if word not in self.new_word and word not in wordz_db.list_words():
             self.new_word.append(word)
@@ -1002,7 +1000,7 @@ class wordzGui:
         self.treestore.clear()
         #print self.new_word
         self.on_back_clicked()
-        
+
     def on_mcq_clicked(self, widget=None, event=None):
         self.window.hide()
         game = games.mcq()
@@ -1071,7 +1069,7 @@ class wordzGui:
     def hello(self,widget=None, event=None):
         #print 'hello'
         pass
-        
+
     def look_for_audio(self):
         page = self.browser.get_html()
         #print page
@@ -1080,8 +1078,7 @@ class wordzGui:
         if div is None:
             #print "No audio available"
             pass
-            
-        else:    
+        else:
             l = str(div).split(',')
             for i in l:
                 if i.find('videoUrl')>0:
@@ -1107,9 +1104,8 @@ class wordzGui:
         file = open(audio_file_path+'/'+self.audio_file, 'wb')
         file.write(audio)
         file.close()
-        
-        
-    """    
+
+    """
     def _navigation_requested_cb(self, view, frame, networkRequest):
         uri = networkRequest.get_uri()
         if uri == self.url:
@@ -1117,10 +1113,8 @@ class wordzGui:
             opener = urllib2.build_opener()
             opener.addheaders = [('User-agent', 'Mozilla/5.0')]
             page = opener.open(uri).read()
-            
             #print page.read()
             soup = BeautifulSoup(page)
-            
             #extract contents
             for i in soup.html.body.findAll('div', {'id' : 'content'}):
                 contents = i
@@ -1129,11 +1123,9 @@ class wordzGui:
             head = soup.html.head
             tmp = '<html>' + '\n' + str(head) + '\n' + '<body>\n' + str(contents) + '\n</body>' + '</html>'
             view.load_string(tmp, "text/html", "utf-8", uri)
-        
-        
         return 1
     """
-    
+
     def load_progress_changed(self, webview, amount):
         self.progress.set_fraction(amount/100.0)
         self.browser_load_status='loading'
@@ -1143,7 +1135,7 @@ class wordzGui:
         self.browser_load_status='started'
 
     def load_finished(self, webview, frame):
-        self.progress.set_visible(False)  
+        self.progress.set_visible(False)
         self.browser_load_status = 'finished'
         if self.count == 0:
             self.count = 1
@@ -1179,7 +1171,7 @@ class wordzGui:
                     self.audio_found = True
                     self.on_save_audio_clicked()
                     #print self.audio_file
-                    
+
         self.audio_checked = True
         #for i in soup.html.body.findAll('div', {'id' : 'content'}):
         #    contents = i
@@ -1192,9 +1184,8 @@ class wordzGui:
         txt_html = html2text(tmp, self.url)
         wiki_txt = get_fields.main(txt_html)
         wordz_db.save_wiktionary(self.tree_value, wiki_txt)
-        self.show_details_tree() 
+        self.show_details_tree()
 
-        
     def on_lookup_wiki_clicked(self, widget=None,event=None):
         self.count = 0
         url = 'http://en.wiktionary.org/wiki/' + self.tree_value + '?action=render'
@@ -1229,7 +1220,7 @@ class wordzGui:
     def on_notebook1_change_current_page(self, widget=None, event=None):
         notebook1 = self.builder.get_object('notebook1')
         #print notebook1.get_current_page()"""
-    
+
     def on_notebook1_switch_page(self, notebook, page, page_num):
         #print 'page switched'
         #print page_num
@@ -1263,8 +1254,7 @@ class wordzGui:
                 pass
             else:
                 self.on_lookup_wiki_clicked(self.tree_value)
-            
-            
+
     def on_search_changed(self,widget=None,event=None):
         search_txt = self.search.get_text()
         words = list
@@ -1276,7 +1266,6 @@ class wordzGui:
             for i in wordz_db.list_words_per_group(group):
                 if i.startswith(search_txt):
                     piter = self.treestore.append(None, [i, self.acc_dict[i]])
-                
                     #for word in wordz_db.list_words_per_group(group):
                     #    self.treestore.append(piter, [word])
 
@@ -1289,7 +1278,6 @@ class wordzGui:
             if self.welcome is self.hbox2.get_children()[1]:
                 self.welcome.hide()
                 self.frame4.hide()
-                
             #    self.hbox2.remove(self.welcome)
             #    self.hbox2.pack_start(self.builder.get_object('frame2'))
             self.tree_value = self.model.get_value(self.iter,0)
@@ -1308,8 +1296,8 @@ class wordzGui:
                 self.vpan.set_position(int((240.0/4((40)))*h))
             else:
                 self.vpan.set_position(10000)
-                self.hbox3.hide()'''
-            
+                self.hbox3.hide()
+            '''
             #if self.output_txtview.get_editable():
             #    self.output_txtview.set_editable(False)
             detail = wordz_db.get_details(self.tree_value)
@@ -1345,7 +1333,7 @@ class wordzGui:
             #print "wiktionary"+ wik
         except:
             pass
-        
+
         try:
             if wn != u'':
                 table = gtk.Table(columns=2)
@@ -1364,7 +1352,6 @@ class wordzGui:
                         frame = gtk.Frame()
                         frame.set_shadow_type(gtk.SHADOW_OUT)
                         #frame.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse("grey"))
-                        
                         frame.show()
                         event_b.show()
                         #hbox_n.pack_start(frame, false)
@@ -1406,7 +1393,6 @@ class wordzGui:
                         vbox1.pack_start(label, True)
                         vbox1.show()
                         vbox.pack_start(vbox1, False)
-                        
                     elif x.startswith('\tSynonyms:'):
                         #self.details_treestore.append(sub_sub_iter, [x.strip('\t').replace('Synonyms', '<span foreground="blue">Synonyms</span>')])
                         frame = gtk.Frame(_('Synonyms'))
@@ -1493,7 +1479,6 @@ class wordzGui:
                     hbox.pack_start(sub_sub_vbox, False)
                     sub_sub_vbox.pack_start(sub_sub_label, False)
                     sub_sub_frame = gtk.Frame(' ')
-                    
                     label_ = sub_sub_frame.get_label_widget()
                     label_.set_markup('<b>'+x.lstrip('\t#')+'</b>')
                     label_.set_alignment(0, 0.5)
@@ -1511,11 +1496,9 @@ class wordzGui:
                     eventb.add(sub_label)
                     sub_label.set_alignment(0,0.5)
                     sub_label.set_use_markup(True)
-                    
                     sub_sub_sub_vbox.pack_start(eventb, False)
                     hbox.pack_start(sub_sub_frame)
                     sub_vbox.pack_start(hbox, False)
-                    
                 elif x.startswith('\t') and not x.startswith('\t#') and not x.startswith('\t\t'):
                     if sub_label.get_use_markup() == False:
                         sub_label.set_use_markup(True)
@@ -1596,7 +1579,6 @@ class wordzGui:
                         frame.show()
                         frame.add(sub_vbox)
                         s = i.split('\n')
-                        
                         for j in s:
                             if j==u'' or j.find('            ')>=0:
                                 pass
@@ -1686,7 +1668,6 @@ class wordzGui:
                 self.builder.get_object('label9').show()
                 self.builder.get_object('label10').hide()
                 self.builder.get_object('scrolledwindow7').hide()
-                    
         except:
             pass
     def on_delete_clicked(self, widget=None, event=None):
@@ -1731,7 +1712,7 @@ class wordzGui:
         gtk.main_quit()
 
     def on_add_clicked(self, widget, data=None):
-	word = self.get_word.get_text()
+        word = self.get_word.get_text()
         self.new_word = []
         if word not in self.new_word and word not in wordz_db.list_words():
             self.new_word.append(word)
@@ -1776,10 +1757,10 @@ class wordzGui:
     def on_back_clicked(self, widget=None, data=None):
         if self.search.get_text()!= '':
             self.frame2.hide()
-            self.frame4.hide() 
+            self.frame4.hide()
             self.search.set_text('')
             self.welcome.show()
-            self.frame4.hide() 
+            self.frame4.hide()
             self.note.set_alignment(0.5, 0.1)
             self.note.set_markup('<span foreground="white"><b>Nothing selected</b></span>')
             return
@@ -1838,7 +1819,6 @@ class wordzGui:
         self.welcome.show()
         self.note.set_alignment(0.5, 0.1)
         self.note.set_markup('<span foreground="white"><b>Nothing selected</b></span>')
-        
 
         self.play_b.set_sensitive(False)
         self.delete_b.set_sensitive(False)
@@ -1856,8 +1836,6 @@ class wordzGui:
         buff = self.details.get_buffer()
         buff.set_text(defs)
         self.details.set_buffer(buff)
-        
-            
 
     #def on_get_details1_clicked(self, widget, data=None):
         #thread.start_new_thread(self.on_get_details1_clicked,(self,''))
@@ -1890,6 +1868,7 @@ class wordzGui:
         end = buff.get_iter_at_offset(-1)
         buff.place_cursor(end)
         buff.insert_interactive_at_cursor(defs, True)"""
+
     def on_lookup_webster_clicked(self, widget=None, event=None):
         self.builder.get_object('look_webster').set_sensitive(False)
         self.builder.get_object('label9').hide()
@@ -1904,7 +1883,6 @@ class wordzGui:
         else:
             d = online_dict()
             defs = d.get_def(word)
-            
             wordz_db.save_webster(win.tree_value, defs)
         defs = '\n' + "webster:\n" + defs + '\n'
         #print defs
